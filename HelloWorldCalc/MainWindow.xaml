@@ -1,0 +1,165 @@
+﻿<Window x:Class="HelloWorldCalc.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HelloWorldCalc"
+        xmlns:converter="clr-namespace:HelloWorldCalc"
+        
+    mc:Ignorable="d"
+        Title="Hello World WPF Calculator" Height="620" Width="441" MinWidth="320" MinHeight="520" Top="50">
+
+    <Window.Resources>
+        <converter:converterme x:Key="converterme" />
+        <Style x:Key="bigbutton_numeric" TargetType="Button">
+            <Setter Property="Background" Value="#FFCBDFFF" />
+            <Setter Property="FontSize" Value="36" />
+            <Setter Property="FontWeight" Value="Black" />
+        </Style>
+
+        <Style x:Key="bigbutton_accessories" TargetType="Button">
+            <Setter Property="Background" Value="#FF94B4E9" />
+            <Setter Property="FontSize" Value="36" />
+        </Style>
+
+        <Style x:Key="bigbutton_cceplusminus" TargetType="Button">
+            <Setter Property="Background" Value="#FF94B4E9" />
+            <Setter Property="FontSize" Value="25" />
+        </Style>
+
+        <Style x:Key="smallbutton_memory" TargetType="Button">
+            <Setter Property="BorderThickness" Value="0,0,0,0" />
+            <Setter Property="Background" Value="#FFEAEDF5" />
+            
+        </Style>
+        <BooleanToVisibilityConverter x:Key="VisibleIfTrueConverter" />
+        
+    </Window.Resources>
+
+    <Grid>
+        <!--<Label x:Name="_errormessage" Visibility="{Binding Path=ErrorVisible, Converter={StaticResource VisibleIfTrueConverter}}" />-->
+
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <Label Content="{Binding ElementName=namebox, Path=Text}" ContentStringFormat=" {0}'s Calculator" Grid.Column="1" Grid.ColumnSpan="4" Margin="0,6,4,0" FontWeight="Bold" FontSize="28" Foreground="#FF09122B" Grid.RowSpan="2"/>
+        <Grid Grid.Row="2" Grid.ColumnSpan="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Border BorderThickness="0,2,0,0" BorderBrush="Black" Panel.ZIndex="13">
+                <TextBlock Grid.Row="1" Grid.RowSpan="2" Grid.Column="1"  Text="000000 " TextWrapping="Wrap" FontSize="20" FontStyle="Normal" FontWeight="SemiBold" TextAlignment="Right" Margin="0,0,0,-26" >
+                    <TextBlock.Background>
+                        <LinearGradientBrush EndPoint="1, 0.5" StartPoint="0, 0.5">
+                            <GradientStop Color="#FFE0E4F7"/>
+                            <GradientStop Color="WhiteSmoke" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Background>
+                </TextBlock>
+            </Border>
+            <Border BorderThickness="0,0,0,2" BorderBrush="Black" Grid.Row="2" Grid.Column="1" Grid.RowSpan="3">
+                <TextBlock Text="00000000000 " x:Name="textscreen" TextWrapping="Wrap" FontSize="36" FontStyle="Normal" FontWeight="SemiBold" TextAlignment="Right" FlowDirection="LeftToRight" >
+                    <TextBlock.Background>
+                        <LinearGradientBrush EndPoint="1, 0.5" StartPoint="0, 0.5">
+                            <GradientStop Color="#FFE0E4F7"/>
+                            <GradientStop Color="WhiteSmoke" Offset="1"/>
+                        </LinearGradientBrush>
+                    </TextBlock.Background>
+                </TextBlock>
+            </Border>
+            <Label x:Name="labelme" Content="M" 
+                   Background="#00000000" Grid.RowSpan="3" Panel.ZIndex="100" Margin="10,10,0,0" 
+                   Height="35" FontWeight="Heavy" FontSize="15" VerticalAlignment="Top" 
+                   HorizontalAlignment="Left" Width="40">
+                <Label.Visibility>
+                    <MultiBinding Converter="{StaticResource converterme}" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="iserror" />
+                        <Binding Path="Memory" />
+                    </MultiBinding>
+                </Label.Visibility>
+            </Label>
+            
+
+
+        </Grid>
+
+
+
+        <!--Numeric-->
+        <Button x:Name="number1" Style="{StaticResource bigbutton_numeric}" Content="1" Grid.Column="1" Grid.Row="7" Focusable="False" Click="Button_Click" />
+        <Button x:Name="number2" Style="{StaticResource bigbutton_numeric}" Content="2" Grid.Column="2" Grid.Row="7" Focusable="False" Click="Button_Click" />
+        <Button x:Name="number3" Style="{StaticResource bigbutton_numeric}" Content="3" Grid.Column="3" Grid.Row="7" Focusable="False" Click="Button_Click" />
+        <Button x:Name="number4" Style="{StaticResource bigbutton_numeric}" Content="4" Grid.Column="1" Grid.Row="6" Focusable="False" Click="Button_Click"/>
+        <Button x:Name="number5" Style="{StaticResource bigbutton_numeric}" Content="5" Grid.Column="2" Grid.Row="6" Focusable="False" Click="Button_Click" />
+        <Button x:Name="number6" Style="{StaticResource bigbutton_numeric}" Content="6" Grid.Column="3" Grid.Row="6" Focusable="False" Click="Button_Click" />
+        <Button x:Name="number7" Style="{StaticResource bigbutton_numeric}" Content="7" Grid.Column="1" Grid.Row="5" Focusable="False" Click="Button_Click" />
+        <Button x:Name="number8" Style="{StaticResource bigbutton_numeric}" Content="8" Grid.Column="2" Grid.Row="5" Focusable="False" Click="Button_Click"/>
+        <Button x:Name="number9" Style="{StaticResource bigbutton_numeric}" Content="9" Grid.Column="3" Grid.Row="5" Focusable="False" Click="Button_Click" />
+        <Button x:Name="number0" Style="{StaticResource bigbutton_numeric}" Content="0" Grid.Column="2" Grid.Row="8" Focusable="False" Click="Button_Click"/>
+
+        <!--Bottom Accessories-->
+        <Button Style="{StaticResource bigbutton_cceplusminus}" Content="+/-" Grid.Column="1" Grid.Row="8"  Focusable="False"/>
+        <Button Style="{StaticResource bigbutton_accessories}" Content="." Grid.Column="3" Grid.Row="8" Focusable="False" Click="Button_Click"/>
+
+        <!--Operation-->
+        <Button Style="{StaticResource bigbutton_accessories}" Content="÷" Grid.Column="4" Grid.Row="4" Focusable="False"/>
+        <Button Style="{StaticResource bigbutton_accessories}" Content="x" Grid.Column="4" Grid.Row="5" Focusable="False" />
+        <Button Style="{StaticResource bigbutton_accessories}" Content="-" Grid.Column="4" Grid.Row="6" Focusable="False" />
+        <Button Style="{StaticResource bigbutton_accessories}" Content="+" Grid.Column="4" Grid.Row="7" Focusable="False"  />
+        <Button Style="{StaticResource bigbutton_accessories}" Content="=" Grid.Column="4" Grid.Row="8" Focusable="False" />
+
+        <!--Clear or Delete-->
+        <Button Style="{StaticResource bigbutton_accessories}" Content="&lt;" Grid.Column="3" Grid.Row="4" Focusable="False"/>
+        <Button Style="{StaticResource bigbutton_cceplusminus}" Content="C" Grid.Column="2" Grid.Row="4" Focusable="False" Click="Button_clearall"/>
+        <Button Style="{StaticResource bigbutton_cceplusminus}" Content="CE" Grid.Column="1" Grid.Row="4" Focusable="False" />
+
+        <CheckBox x:Name="checkbox" Grid.Column="1" HorizontalAlignment="Left" Height="30" Margin="1,3,0,0" Grid.RowSpan="2" Grid.Row="9" VerticalAlignment="Top" Width="32" BorderThickness="3,3,3,3"  BorderBrush="#FF09122B" Focusable="False" />
+        <TextBox x:Name="namebox" IsEnabled="{Binding ElementName=checkbox, Path=IsChecked}" Grid.ColumnSpan="4" Grid.Column="1" Height="22" Margin="21,0,1,0" Grid.Row="9" Text="ENGRBUGS" TextWrapping="Wrap" VerticalAlignment="Center" BorderThickness="3,3,3,3" BorderBrush="#FF09122B" />
+
+        <!--Memory Button-->
+        <Grid Grid.ColumnSpan="4" Grid.Column="1" Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Button Style="{StaticResource smallbutton_memory}" Content="MC" Grid.Column="0" Grid.Row="1" Click="ButtonClick_memory" />
+            <Button Style="{StaticResource smallbutton_memory}" Content="MR" Grid.Column="1" Grid.Row="1" Click="ButtonClick_memory" />
+            <Button Style="{StaticResource smallbutton_memory}" Content="M+" Grid.Column="2" Grid.Row="1" Click="ButtonClick_memory" />
+            <Button Style="{StaticResource smallbutton_memory}" Content="M-" Grid.Column="3" Grid.Row="1" Click="ButtonClick_memory" />
+            <Button Style="{StaticResource smallbutton_memory}" Content="MS" Grid.Column="4" Grid.Row="1" Click="ButtonClick_memory" />
+        </Grid>
+    </Grid>
+
+</Window>
